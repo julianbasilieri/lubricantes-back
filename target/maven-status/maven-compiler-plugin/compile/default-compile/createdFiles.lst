@@ -1,0 +1,13 @@
+com\alonso\lubricantes\services\transformations\ArticuloDtoWithImageMapper.class
+com\alonso\lubricantes\entities\ArticuloDtoWithImage.class
+com\alonso\lubricantes\services\transformations\ArticuloMapper.class
+com\alonso\lubricantes\services\ArticuloService.class
+com\alonso\lubricantes\repositories\ArticuloRepository.class
+com\alonso\lubricantes\entities\Articulo.class
+com\alonso\lubricantes\services\ArticuloServiceImpl.class
+com\alonso\lubricantes\LubricantesApplication.class
+com\alonso\lubricantes\services\transformations\ArticuloDtoMapper.class
+com\alonso\lubricantes\config\CorsConfig.class
+com\alonso\lubricantes\entities\ArticuloDto.class
+com\alonso\lubricantes\controllers\ArticuloController.class
+com\alonso\lubricantes\services\Service.class
