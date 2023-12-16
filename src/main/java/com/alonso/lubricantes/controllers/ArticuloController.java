@@ -1,6 +1,7 @@
 package com.alonso.lubricantes.controllers;
 
 import com.alonso.lubricantes.entities.ArticuloDto;
+import com.alonso.lubricantes.entities.ArticuloDtoWithImage;
 import com.alonso.lubricantes.services.ArticuloService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,26 +32,38 @@ public class ArticuloController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> add(@RequestBody ArticuloDto entity) {
+    public ResponseEntity<String> add(@RequestBody ArticuloDto entity) {
         articuloService.add(entity);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("Artículo agregado exitosamente");
     }
 
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody ArticuloDto entity) {
+    public ResponseEntity<String> update(@RequestBody ArticuloDto entity) {
         articuloService.updatePrecio(entity);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body("Precio del artículo actualizado exitosamente");
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") String id) {
+    public ResponseEntity<String> delete(@PathVariable("id") String id) {
         articuloService.delete(id);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body("Artículo eliminado exitosamente");
     }
 
     @PostMapping("/list")
-    public ResponseEntity<Void> add_list(@RequestBody List<ArticuloDto> entities) {
-        articuloService.add_list(entities);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<String> addList(@RequestBody List<ArticuloDto> entities) {
+        articuloService.addList(entities);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Lista de artículos procesada exitosamente");
+    }
+
+    @GetMapping("/image")
+    public ResponseEntity<List<ArticuloDtoWithImage>> getAllWithImage() {
+        List<ArticuloDtoWithImage> values = articuloService.getAllWithImage();
+        return ResponseEntity.ok(values);
+    }
+
+    @GetMapping("/image/{id}")
+    public ResponseEntity<ArticuloDtoWithImage> getByIdWithImage(@PathVariable("id") String id) {
+        ArticuloDtoWithImage value = articuloService.getByIdWithImage(id);
+        return ResponseEntity.ok(value);
     }
 }
