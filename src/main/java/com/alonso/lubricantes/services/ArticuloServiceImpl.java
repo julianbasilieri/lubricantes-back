@@ -8,6 +8,7 @@ import com.alonso.lubricantes.services.transformations.ArticuloDtoMapper;
 import com.alonso.lubricantes.services.transformations.ArticuloDtoWithImageMapper;
 import com.alonso.lubricantes.services.transformations.ArticuloMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,29 +60,19 @@ public class ArticuloServiceImpl implements ArticuloService {
 
     @Override
     public ArticuloDto getById(String id) {
-        long startTime = System.currentTimeMillis();
-
         Optional<Articulo> optionalArticulo = articuloRepository.findById(id);
-
-        long endTime = System.currentTimeMillis();
-        long elapsedTime = endTime - startTime;
-
-        System.out.println("Finalizado en " + elapsedTime + " milisegundos");
-
         return optionalArticulo
                 .map(articuloDtoMapper)
                 .orElseThrow();
     }
-
     @Override
     public void addList(List<ArticuloDto> articulos) {
-        articulos.forEach(this::addOrUpdateArticulo);
+        List<Articulo> allArticulos = articuloRepository.findAll();
+        articulos.forEach(articulo -> addOrUpdateArticulo(articulo, allArticulos));
         System.out.println("finalizado");
     }
 
-    private void addOrUpdateArticulo(ArticuloDto articulo) {
-        List<Articulo> allArticulos = articuloRepository.findAll();
-
+    private void addOrUpdateArticulo(ArticuloDto articulo, List<Articulo> allArticulos) {
         allArticulos
                 .stream()
                 .filter(existingArticulo -> existingArticulo.getId().equals(articulo.getId()))
@@ -98,7 +89,6 @@ public class ArticuloServiceImpl implements ArticuloService {
                             System.out.println("Se agregó el nuevo artículo " + articulo.getId() + " a la base de datos");
                         }
                 );
-        System.out.println(articulo.getId());
     }
 
     @Override
